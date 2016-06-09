@@ -12,7 +12,7 @@ class CreateVariantsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('shop_variants', function(Blueprint $table)
+		Schema::create('variants', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->string('slug');

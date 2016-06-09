@@ -13,7 +13,7 @@ class Variant extends Model implements EntityInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $table = 'shop_variants';
+	protected $table = 'variants';
 
 	/**
 	 * {@inheritDoc}
