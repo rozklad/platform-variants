@@ -34,4 +34,9 @@ class Variant extends Model implements EntityInterface {
 	 */
 	protected static $entityNamespace = 'sanatorium/variants.variant';
 
+	public function variant()
+	{
+		return $this->belongsTo('Sanatorium\Shop\Models\Product', 'parent_id');
+	}
+
 }

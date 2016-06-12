@@ -18,8 +18,8 @@ class VariantServiceProvider extends ServiceProvider {
 		// Subscribe the registered event handler
 		$this->app['events']->subscribe('sanatorium.variants.variant.handler.event');
 
-		// Register product as product
-        AliasLoader::getInstance()->alias('Product', 'Sanatorium\Variants\Models\Variant');  
+		// Register variant as product
+        // AliasLoader::getInstance()->alias('Product', 'Sanatorium\Variants\Models\Variant');
 	}
 
 	/**
