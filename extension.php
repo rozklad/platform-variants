@@ -67,7 +67,7 @@ return [
 	|
 	*/
 
-	'version' => '0.1.5',
+	'version' => '0.1.6',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -301,12 +301,6 @@ return [
 	'menus' => [
 
 		'admin' => [
-			
-		],
-		'main' => [
-			
-		],
-		'admin-sanatorium-shop' => [
 			[
 				'class' => 'fa fa-circle-o',
 				'name' => 'Variants',
@@ -314,6 +308,9 @@ return [
 				'regex' => '/:admin\/variants\/variant/i',
 				'slug' => 'admin-sanatorium-variants-variant',
 			],
+		],
+		'main' => [
+			
 		],
 	],
 
