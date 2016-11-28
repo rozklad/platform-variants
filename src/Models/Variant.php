@@ -39,4 +39,23 @@ class Variant extends Model implements EntityInterface {
 		return $this->belongsTo('Sanatorium\Shop\Models\Product', 'parent_id');
 	}
 
+	public function variantAttributes($object = false)
+    {
+        $attributes = $this->attributesToArray();
+        $result = [];
+
+        foreach( $attributes as $attribute => $value )
+        {
+            $attributeObj = app('platform.attributes')->whereSlug($attribute)->whereNamespace(self::$entityNamespace)->first();
+
+            if ( is_object($attributeObj) )
+            {
+                $result[$attribute] = $value;
+            }
+
+        }
+
+        return $result;
+    }
+
 }

@@ -222,4 +222,79 @@ class VariantsController extends AdminController {
 		return redirect()->back()->withInput();
 	}
 
+	public static function productVariantAttributes($product)
+    {
+        if ( !is_object($product) )
+            return [];
+
+        if ( !method_exists($product, 'variants') )
+            return [];
+
+        $result = [];
+
+        foreach( $product->variants()->get() as $variant )
+        {
+            $result = array_merge($result, array_keys($variant->variantAttributes()));
+        }
+
+        return array_unique($result);
+    }
+
+    public static function getVariants($product)
+    {
+        if ( !is_object($product) )
+            return [];
+
+        if ( !method_exists($product, 'variants') )
+            return [];
+
+        $result = [];
+
+        foreach( $product->variants()->get() as $variant )
+        {
+            $result[] = [
+                'id' => $variant->id,
+                'attributes' => $variant->variantAttributes()
+            ];
+        }
+
+        return $result;
+    }
+
+    public function product()
+    {
+        $settings = json_decode( request()->get('settings'), true );
+        $product_id = request()->get('product');
+
+        $product = app('sanatorium.shop.product')->find($product_id);
+
+        if ( !is_object($product) )
+            return response('Fail');
+
+        $variants = [];
+        $ids = [];
+
+        foreach( $settings as $variant )
+        {
+            if ( isset($variant['id']) )
+            {
+                $variants[] = app('sanatorium.variants.variant')->find($variant['id']);
+                $ids[] = $variant['id'];
+            }
+            if ( isset($variant['draft']) )
+            {
+                list($messages, $variant) = app('sanatorium.variants.variant')->create($variant['attributes']);
+                $variants[] = $variant;
+                $ids[] = $variant->id;
+            }
+        }
+
+        $product->variants()->saveMany($variants);
+
+        app('sanatorium.variants.variant')->whereNotIn('id', $ids)->delete();
+
+        return self::getVariants($product);
+
+    }
+
 }
