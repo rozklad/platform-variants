@@ -254,7 +254,13 @@ class VariantsController extends AdminController {
         {
             $result[] = [
                 'id' => $variant->id,
-                'attributes' => $variant->variantAttributes()
+                'attributes' => $variant->variantAttributes(),
+                'price' => $variant->getPrice('plain', 1, null, false, false),
+                'price_vat' => $variant->getPrice('vat', 1, null, false, false),
+                'ean' => ($variant->ean == '' ? $product->ean : $variant->ean),
+                'code' => ($variant->code == '' ? $product->code : $variant->code),
+                'stock' => $variant->stock,
+                'weight' => $variant->weight
             ];
         }
 
